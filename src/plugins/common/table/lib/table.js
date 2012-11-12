@@ -1558,6 +1558,37 @@ define([
 
 		};
 
+		var getMaxColWidth = function(cell) {
+			var columnId = cell.closest( 'tr' ).children().index( cell );
+			var rows = cell.closest( 'table' ).find( 'tr' );
+			var largestWord = "";
+
+			for ( var i = 0; i < rows.length; i++ ) {
+				var curCell = jQuery( jQuery( rows[i] ).children()[ columnId ] );
+				var cellWords = curCell.text().split(" ");
+
+				// pick the largest word in the cell
+				for ( var j = 0; j < cellWords.length; j++ ) {
+					if ( cellWords[j].length > largestWord.length ) {
+						largestWord = cellWords[j];
+					}
+				}
+			}
+
+			var fakeCell = jQuery("<span></span>");
+			fakeCell.css( 'text-indent', -9999 );
+			fakeCell.css( 'display', 'inline' );
+			fakeCell.text( largestWord );
+
+			jQuery( cell ).append( fakeCell );
+
+			var width = fakeCell.width();
+
+			jQuery( fakeCell ).remove();
+
+			return width;
+		};
+
 		cell.bind( 'mousedown.resize', function() {
 
 			// create a guide
@@ -1573,8 +1604,9 @@ define([
 			jQuery( 'body' ).append( guide );
 
 			// set the maximum and minimum resize
-			var maxPageX = ( jQuery( cell ).offset().left + jQuery( cell ).width() );
-			var minPageX = jQuery( cell ).prev().offset().left + ( jQuery( cell ).prev().outerWidth() - jQuery( cell ).prev().width());
+			//console.log( getMaxColWidth( jQuery( cell ) ) );
+			var maxPageX =  ( jQuery( cell ).offset().left + jQuery( cell ).outerWidth() ) - ( getMaxColWidth( jQuery( cell ) ) + ( jQuery( cell).outerWidth() - jQuery( cell ).width() ) );
+			var minPageX = jQuery( cell ).prev().offset().left + (jQuery( cell ).prev().outerWidth() - jQuery( cell ).prev().width()) + getMaxColWidth( jQuery( cell ).prev() );
 
 			// unset the selection type
 			that.selection.resizeMode = true;
