@@ -31,7 +31,8 @@ define([
 	'jquery',
 	'aloha/ecma5shims',
 	'aloha/console',
-	'aloha/block-jump'
+	'aloha/block-jump',
+	'util/range'
 ], function (
 	Aloha,
 	Class,
@@ -39,7 +40,8 @@ define([
 	jQuery,
 	shims,
 	console,
-	BlockJump
+	BlockJump,
+	Range
 ) {
 	"use strict";
 
@@ -393,6 +395,7 @@ define([
 				Aloha.execCommand('insertparagraph', false);
 				return false;
 			}
+
 			return true;
 		},
 

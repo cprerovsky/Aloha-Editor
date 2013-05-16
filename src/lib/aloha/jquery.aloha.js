@@ -87,6 +87,9 @@ define([
 	 * Make the object contenteditable. Care about browser version (name of contenteditable attribute depends on it)
 	 */
 	jQuery.fn.contentEditable = function (b) {
+		// don't use contentEditable anymore
+		return $el = jQuery(this);
+
 		// ie does not understand contenteditable but contentEditable
 		// contentEditable is not xhtml compatible.
 		var $el = jQuery(this);

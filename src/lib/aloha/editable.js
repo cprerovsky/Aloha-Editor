@@ -735,6 +735,13 @@ define([
 
 			this.isActive = true;
 
+			// add aloha caret
+			if (Aloha.$caret) {
+				Aloha.$caret.remove();
+			}
+			Aloha.$caret = jQuery('<span id="aloha-caret">&#8203;</span>');
+			this.obj.find('>:first-child').prepend(Aloha.$caret);
+
 			/**
 			 * @event editableActivated fires after the editable has been activated by clicking on it.
 			 * This event is triggered in Aloha's global scope Aloha
@@ -1034,4 +1041,27 @@ define([
 	Aloha.Editable.getContentSerializer = function () {
 		return contentSerializer;
 	};
+
+	Aloha.ready(function () {
+		jQuery(document).keypress(function (event) {
+			var caret = Aloha.$caret.get(0),
+				text = caret.previousSibling,
+				keyChar = String.fromCharCode(event.keyCode);
+
+			// because the caret is positioned in the first
+			// index of the editable, we need to create a text 
+			// node to write to
+			if (text === null) {
+				Aloha.$caret.parent().prepend('X');
+				text = caret.previousSibling;
+				text.data = '';
+			}
+
+			text.data += keyChar;
+
+			event.preventDefault();
+		});
+	});
+
+
 });
