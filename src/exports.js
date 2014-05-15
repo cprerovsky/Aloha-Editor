@@ -26,6 +26,7 @@ define([
 	'ephemera',
 	'events',
 	'functions',
+	'handlers',
 	'html',
 	'image',
 	'keys',
@@ -71,6 +72,7 @@ define([
 	Ephemera,
 	Events,
 	Fn,
+	Handlers,
 	Html,
 	Image,
 	Keys,
@@ -119,6 +121,7 @@ define([
 	exports['ephemera'] = Ephemera;
 	exports['events'] = Events;
 	exports['fn'] = Fn;
+	exports['handlers'] = Handlers;
 	exports['html'] = Html;
 	exports['image'] = Image;
 	exports['keys'] = Keys;

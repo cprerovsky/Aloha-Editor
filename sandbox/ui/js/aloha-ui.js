@@ -1,15 +1,17 @@
 require([
-	'../../src/aloha',
-	'../../src/arrays',
-	'../../src/boromir',
-	'../../src/boundaries',
-	'../../src/dom'
+	'aloha',
+	'arrays',
+	'boromir',
+	'boundaries',
+	'dom',
+	'handlers'
 ], function (
 	aloha,
 	Arrays,
 	Boromir,
 	Boundaries,
-	Dom
+	Dom,
+	Handlers
 ) {
 	'use strict';
 
@@ -117,8 +119,21 @@ require([
 
 	var lastValidRange;
 
-	// will be invoked after each aloha event
-	function alohaCB(event) {
+	//var stack = Handlers.stack();
+
+
+
+	
+	console.error(Handlers.stack === aloha.handlers.stack, aloha.handlers);
+
+
+
+
+
+
+	Handlers.ooop = 1;
+	Handlers.stack = window.hs = [function handleUi(event) {
+		console.log('ui');
 		if (event.type !== 'keyup' &&
 			event.type !== 'click') {
 			return;
@@ -140,6 +155,7 @@ require([
 		}
 
 		updateUi();
-	}
-	window.alohaCB = alohaCB;
+		return event;
+	}];
+	//Handlers.stack(stack);
 });

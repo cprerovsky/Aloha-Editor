@@ -16,6 +16,7 @@ define([
 	'editables',
 	'events',
 	'functions',
+	'handlers',
 	'keys',
 	'maps',
 	'mouse',
@@ -33,6 +34,7 @@ define([
 	Editables,
 	Events,
 	Fn,
+	Handlers,
 	Keys,
 	Maps,
 	Mouse,
@@ -45,35 +47,11 @@ define([
 ) {
 	'use strict';
 
-	function setSelection(event) {
-		if (event.range) {
-			Ranges.select(event.range);
-		}
-		return event;
-	}
-
 	function editor(nativeEvent, custom) {
 		var alohaEvent = custom || {'nativeEvent' : nativeEvent};
 		alohaEvent.editor = editor;
-		Fn.comp(
-			function (alohaEvent) {
-				if (typeof alohaCB !== 'undefined') {
-					alohaCB(alohaEvent);
-				}
-			},
-			setSelection,
-			Selections.handle,
-			Typing.handle,
-			Blocks.handle,
-			DragDrop.handle,
-			Paste.handle,
-			function (alohaEvent) {
-				alohaEvent.editable = alohaEvent.editor.editables[1];
-				return alohaEvent;
-			},
-			Mouse.handle,
-			Keys.handle
-		)(alohaEvent);
+		console.warn(Handlers.stack, window.hs);
+		Handlers.handle(Handlers.stack, alohaEvent);
 	}
 
 	editor.editables = {};
